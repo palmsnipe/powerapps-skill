@@ -69,7 +69,13 @@ Filter(Requests, Status.Value = "Open")
 For search-like behavior, prefer `StartsWith()` where supported:
 
 ```powerfx
-Filter(Requests, StartsWith(Title, txtSearch.Text))
+With(
+    { searchText: Trim(txtSearch.Text) },
+    Filter(
+        Requests,
+        IsBlank(searchText) || StartsWith(Title, searchText)
+    )
+)
 ```
 
 If uncertain, warn that delegation must be verified.
@@ -161,8 +167,16 @@ Avoid sorting by computed expressions when data volume matters.
 Safer:
 
 ```powerfx
-Filter(Requests, StartsWith(Title, txtSearch.Text))
+With(
+    { searchText: Trim(txtSearch.Text) },
+    Filter(
+        Requests,
+        IsBlank(searchText) || StartsWith(Title, searchText)
+    )
+)
 ```
+
+When rewriting optional search, preserve the blank-search guard. A bare `StartsWith(Title, txtSearch.Text)` may be valid, but `IsBlank(searchText) || StartsWith(Title, searchText)` is clearer and more robust for user-controlled search inputs.
 
 Risky:
 

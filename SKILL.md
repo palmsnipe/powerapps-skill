@@ -25,6 +25,7 @@ Do not rely on MCP, live Power Platform access, organization credentials, tenant
 - Avoid headings such as "Delegation-Safe" unless delegation is certain. Prefer "Safer SharePoint-Friendly Rewrite" or "Delegation-Friendly Rewrite to Verify."
 - Do not call SharePoint indexes "mandatory" unless the user has described a specific threshold/error/policy that makes them mandatory. Prefer "strongly recommended for large-list performance" or "verify/index where appropriate."
 - Do not suggest `IfError()` catches delegation warnings. Delegation warnings are authoring-time warnings; `IfError()` is for runtime errors such as `Patch()`, connector, and flow failures.
+- For optional search boxes, normalize once with `Trim()` and preserve the blank-search guard: `IsBlank(searchText) || StartsWith(Title, searchText)`. Do not drop the guard when rewriting formulas.
 - Ask whether the data source is SharePoint, Dataverse, SQL, Excel, or another connector when it matters.
 - Mention delegation risks when filtering, searching, sorting, aggregating, or using `LookUp`.
 - Prefer responsive layouts using containers.

@@ -189,8 +189,16 @@ Current Power Fx syntax uses column identifiers for `Search()` columns. Older ap
 For larger lists, prefer a delegable pattern such as `StartsWith()` when supported by the connector:
 
 ```powerfx
-Filter(Requests, StartsWith(Title, txtSearch.Text))
+With(
+    { searchText: Trim(txtSearch.Text) },
+    Filter(
+        Requests,
+        IsBlank(searchText) || StartsWith(Title, searchText)
+    )
+)
 ```
+
+Use the `IsBlank(searchText) || ...` guard when the search box is optional. It makes the intent clear: blank search returns all records allowed by the other filters. It also avoids repeating `Trim(txtSearch.Text)`.
 
 ## `ForAll()`
 

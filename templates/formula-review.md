@@ -40,6 +40,7 @@ Use this checklist to review a Power Fx formula. Prioritize correctness, delegat
 
 - Formula is short enough to understand.
 - Repeated expressions are named with `With()`.
+- Optional search inputs are normalized once with `Trim()` and preserve an explicit blank-search guard.
 - Record scope is clear with `As` where useful.
 - Control names are meaningful.
 - Nested `If()` or repeated logic is simplified where possible.

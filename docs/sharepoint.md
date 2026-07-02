@@ -101,7 +101,13 @@ Filter(Requests, Lower(Title) = Lower(txtSearch.Text))
 Safer:
 
 ```powerfx
-Filter(Requests, StartsWith(Title, txtSearch.Text))
+With(
+    { searchText: Trim(txtSearch.Text) },
+    Filter(
+        Requests,
+        IsBlank(searchText) || StartsWith(Title, searchText)
+    )
+)
 ```
 
 This is safer because `Title` is normally a text column. It is not a guarantee for every SharePoint schema. Verify in Power Apps Studio and current Microsoft Learn documentation.

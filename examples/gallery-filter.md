@@ -21,9 +21,12 @@ Filter(Requests, Status.Value = "Open")
 Use `StartsWith()` for prefix search when supported by the connector.
 
 ```powerfx
-Filter(
-    Requests,
-    IsBlank(txtSearch.Text) || StartsWith(Title, txtSearch.Text)
+With(
+    { searchText: Trim(txtSearch.Text) },
+    Filter(
+        Requests,
+        IsBlank(searchText) || StartsWith(Title, searchText)
+    )
 )
 ```
 
