@@ -86,7 +86,7 @@ Height = Parent.Height
 Items = SortByColumns(Filter(Requests, Status = "Open"), "Created", SortOrder.Descending)
 ```
 
-Delegation note: confirm the `Filter()` and `SortByColumns()` formula against the actual connector.
+Delegation note: confirm the `Filter()` and `SortByColumns()` formula against the actual connector and column types. For SharePoint, index filter/sort columns for large-list performance, but do not treat indexing as proof of delegation.
 
 ## Form Area
 

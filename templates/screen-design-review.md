@@ -35,7 +35,8 @@ Use this checklist to review a Canvas App screen. Start by identifying the app t
 - Search behavior is appropriate for the connector.
 - Sorts use real columns where possible.
 - Large data sources are not blindly collected.
-- SharePoint filter columns are indexed where needed.
+- SharePoint formulas separate delegation support from indexing/list-threshold concerns.
+- SharePoint filter and sort columns are indexed where needed for scale.
 
 ## State and Behavior
 

@@ -19,6 +19,8 @@ Do not rely on MCP, live Power Platform access, organization credentials, tenant
 - Do not invent Power Fx functions.
 - Do not invent connector capabilities.
 - Do not assume a formula is delegable unless known.
+- Do not say a SharePoint formula "will delegate" just because columns are indexed. Indexing helps SharePoint scale and avoid list-threshold/performance problems; it does not make a non-delegable Power Fx pattern delegable.
+- When discussing SharePoint delegation, use cautious language such as "SharePoint-friendly formula shape" or "likely delegable, verify in Power Apps Studio" unless the exact connector, column types, and formula are known from official documentation.
 - Ask whether the data source is SharePoint, Dataverse, SQL, Excel, or another connector when it matters.
 - Mention delegation risks when filtering, searching, sorting, aggregating, or using `LookUp`.
 - Prefer responsive layouts using containers.
@@ -47,7 +49,7 @@ Prefer concise examples over abstract discussion. If the user asks for a formula
 
 Example:
 
-> I cannot confirm delegation without knowing the connector. If this is SharePoint, prefer indexed columns and delegable predicates such as equality or `StartsWith` where supported. If this is Dataverse, use server-side filtering on indexed/searchable columns where possible.
+> I cannot confirm delegation without knowing the connector and column types. If this is SharePoint, prefer simple source-supported predicates such as equality or `StartsWith` on text where supported, and separately index filter/sort columns for large-list performance. If this is Dataverse, use server-side filtering on searchable/indexed columns where possible.
 
 ## Reference Map
 

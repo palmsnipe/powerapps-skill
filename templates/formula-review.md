@@ -28,7 +28,9 @@ Use this checklist to review a Power Fx formula. Prioritize correctness, delegat
 - `Filter()`, `LookUp()`, sort, search, and aggregation are reviewed.
 - Formula avoids wrapping data source columns in functions where delegation matters.
 - Formula avoids risky `in` or broad `Search()` patterns for large SharePoint/Excel data.
-- SharePoint filters use indexed columns where appropriate.
+- SharePoint filters use a delegation-friendly formula shape where possible.
+- SharePoint filter/sort columns are indexed where appropriate for large-list performance.
+- The review does not claim indexing makes a non-delegable formula delegable.
 - Uncertain delegation is called out explicitly.
 
 ## Readability
@@ -58,4 +60,5 @@ Use this checklist to review a Power Fx formula. Prioritize correctness, delegat
 2. Identify delegation, type, or maintainability risks.
 3. Provide a revised formula.
 4. Explain important changes.
-5. Ask for missing connector or schema details if needed.
+5. Clearly separate delegation support from SharePoint indexing/list-threshold considerations.
+6. Ask for missing connector or schema details if needed.

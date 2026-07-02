@@ -73,8 +73,9 @@ Assume:
 
 - `Status` is a SharePoint choice column.
 - `Priority` is a SharePoint choice column.
-- `Title` is indexed if used for filtering.
-- `Status` and `Priority` are indexed where practical.
+- `Title` is a standard text column.
+- `Status` and `Priority` use choice values whose `.Value` subfield is being compared with equality.
+- Filter and sort columns are indexed where practical for SharePoint large-list performance.
 
 ```powerfx
 With(
@@ -96,7 +97,7 @@ With(
 )
 ```
 
-Delegation warning: SharePoint support depends on column types and formula shape. Avoid `in`, `Lower(Title)`, calculated columns, and complex expressions in the predicate for large lists.
+Delegation warning: SharePoint support depends on column types and formula shape. Avoid `in`, `Lower(Title)`, calculated columns, and complex expressions in the predicate for large lists. Indexing helps SharePoint execute large-list queries, but it does not make non-delegable Power Fx patterns delegable.
 
 ## Dataverse Version
 
@@ -135,5 +136,6 @@ When giving gallery filter advice, mention:
 - The data source determines delegation.
 - Search-like formulas are common delegation risks.
 - `in`, `Search()`, and functions around columns are risky for large data.
-- SharePoint lists need indexed columns for large-list filtering.
+- SharePoint lists need delegation-friendly formulas and indexed filter/sort columns for large-list scale.
+- Do not claim "will delegate if indexed"; say "verify in Power Apps Studio."
 - Excel is not a good backend for large searchable data.

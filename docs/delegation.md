@@ -19,6 +19,24 @@ Always mention delegation when discussing:
 - `in`
 - Complex predicates
 
+## Delegation Language Discipline
+
+Be careful with certainty. Prefer "likely delegable" or "SharePoint-friendly formula shape; verify in Power Apps Studio" over absolute green-check claims.
+
+Do not say:
+
+```text
+This will delegate if the columns are indexed.
+```
+
+Say:
+
+```text
+This uses a more delegation-friendly formula shape. Verify that Power Apps Studio shows no delegation warning for this exact connector, column types, and formula. Indexing the SharePoint columns is still important for large-list performance and list-threshold behavior, but indexing does not make a non-delegable Power Fx pattern delegable.
+```
+
+Delegation support is about whether Power Apps can translate the formula to the connector query. SharePoint indexing is about whether SharePoint can efficiently evaluate large-list queries. They are related in practice, but they are not the same thing.
+
 ## SharePoint Common Limitations
 
 SharePoint is common but has important limits:
@@ -27,10 +45,10 @@ SharePoint is common but has important limits:
 - `Search()` is often risky.
 - `in` is commonly non-delegable.
 - Calculated columns and complex expressions can break delegation.
-- Large lists need indexed columns and simple predicates.
+- Large lists need simple delegation-friendly predicates, plus indexed filter/sort columns for SharePoint scale.
 - Choice, person, and lookup columns require careful formula shape.
 
-Prefer simple filters on indexed columns:
+Prefer simple filters on appropriate columns, and index those columns for large SharePoint lists:
 
 ```powerfx
 Filter(Requests, Status.Value = "Open")
@@ -43,6 +61,11 @@ Filter(Requests, StartsWith(Title, txtSearch.Text))
 ```
 
 If uncertain, warn that delegation must be verified.
+
+For SharePoint complex fields:
+
+- Person columns: only some subfields, such as `Email` and `DisplayName`, are documented as delegable. Prefer `Email` for stability, but still verify.
+- Choice and lookup columns: delegation depends on the subfield and operation. Do not assume `StartsWith()` on choice or lookup subfields is delegable.
 
 ## Dataverse Advantages
 
@@ -170,3 +193,9 @@ Filter(Requests, Status = "Open")
 ## When Uncertain
 
 Say delegation cannot be confirmed without the connector, column types, formula, and app row limit. Provide a safer shape and tell the user what to verify in Power Apps Studio and current Microsoft Learn delegation documentation.
+
+Good uncertainty wording:
+
+```text
+This is a safer SharePoint-friendly rewrite, but I would not call it guaranteed delegable until Studio shows no delegation warning for the exact formula and list schema.
+```

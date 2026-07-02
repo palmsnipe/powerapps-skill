@@ -48,7 +48,8 @@ Use this checklist to review a full Power Apps solution. Start by identifying bu
 - Gallery filters are delegable or risks are documented.
 - Search patterns are connector-aware.
 - Sorts and lookups are reviewed.
-- Large data sets use indexed/searchable columns.
+- Large data sets use delegation-friendly query shapes.
+- SharePoint large lists use indexes where appropriate, without treating indexes as a delegation fix.
 - Expensive formulas are avoided inside gallery templates.
 - Startup loads only necessary data.
 

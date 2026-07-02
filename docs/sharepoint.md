@@ -83,11 +83,14 @@ Confirm the exact expected shape in the app because SharePoint lookup configurat
 
 SharePoint delegation needs care:
 
-- Prefer simple equality filters on indexed columns.
+- Prefer simple equality filters and source-supported operations.
+- Index filter and sort columns for large lists, but do not treat indexing as proof of delegation.
 - Use `StartsWith()` where supported for prefix matching.
 - Avoid `in` for large lists.
 - Avoid calculated columns in filters for large lists.
 - Avoid wrapping data source columns in functions inside predicates.
+- For person columns, prefer `Email` over `DisplayName` for identity stability, but still verify delegation.
+- For choice and lookup columns, check the subfield and operation. Do not assume every operation on `.Value` is delegable.
 
 Risky:
 
@@ -100,6 +103,8 @@ Safer:
 ```powerfx
 Filter(Requests, StartsWith(Title, txtSearch.Text))
 ```
+
+This is safer because `Title` is normally a text column. It is not a guarantee for every SharePoint schema. Verify in Power Apps Studio and current Microsoft Learn documentation.
 
 ## Attachments
 
@@ -132,6 +137,12 @@ For large lists:
 - Filter before sorting.
 - Avoid collecting the entire list.
 - Consider Dataverse if relationships, security, or scale are important.
+
+Important distinction:
+
+- Delegation support comes from the connector and formula shape.
+- SharePoint indexes help SharePoint execute large-list queries efficiently.
+- Indexing does not make `Lower(Title)`, `txtSearch.Text in Title`, `Year(DueDate)`, or other non-delegable formula shapes delegable.
 
 ## When SharePoint Is Suitable
 

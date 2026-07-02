@@ -17,13 +17,17 @@ Check:
 - Formula operators.
 - Data row limit setting.
 - Whether filter columns are indexed.
+- Whether the answer is mixing up delegation support with SharePoint indexing.
 
 Safer approach:
 
 - Use simple predicates.
-- Filter on indexed columns.
+- Use a delegation-friendly formula shape.
+- Index SharePoint filter/sort columns for large-list performance.
 - Avoid `in`, calculated expressions, and functions around data source columns.
 - Prefer Dataverse for relational or large-scale apps.
+
+Do not tell users that indexing fixes delegation. Indexes help SharePoint evaluate large-list queries; they do not make `Lower()`, `Year()`, `in`, or unsupported operations delegable.
 
 ## Invalid Argument Types
 
