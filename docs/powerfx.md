@@ -2,6 +2,8 @@
 
 Power Fx formulas should be readable, predictable, and source-aware. Favor formulas that are easy to debug and maintain over clever one-liners.
 
+For reusable recipe-style formulas, see [powerfx-patterns.md](powerfx-patterns.md).
+
 ## `With()`
 
 Use `With()` to name intermediate values inside a formula. This avoids repeating expressions and makes formulas easier to read.

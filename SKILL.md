@@ -57,6 +57,7 @@ Example:
 Read the relevant files before answering detailed questions:
 
 - Power Fx formulas and maintainability: [docs/powerfx.md](docs/powerfx.md)
+- Practical Power Fx formula patterns: [docs/powerfx-patterns.md](docs/powerfx-patterns.md)
 - Canvas App design and maintainability: [docs/canvas-apps.md](docs/canvas-apps.md)
 - Canvas components, component libraries, and code components: [docs/components.md](docs/components.md)
 - Delegation: [docs/delegation.md](docs/delegation.md)
@@ -72,6 +73,11 @@ Use examples when the user needs a concrete pattern:
 
 - Gallery filters: [examples/gallery-filter.md](examples/gallery-filter.md)
 - Patch and form save patterns: [examples/patch-form.md](examples/patch-form.md)
+- Date filter patterns: [examples/date-filter-patterns.md](examples/date-filter-patterns.md)
+- SharePoint field shapes: [examples/sharepoint-field-shapes.md](examples/sharepoint-field-shapes.md)
+- Dataverse field shapes: [examples/dataverse-field-shapes.md](examples/dataverse-field-shapes.md)
+- Validation and error patterns: [examples/validation-and-errors.md](examples/validation-and-errors.md)
+- Variables and state patterns: [examples/variables-and-state.md](examples/variables-and-state.md)
 - Responsive screen layout: [examples/responsive-screen.md](examples/responsive-screen.md)
 - Localization: [examples/localization.md](examples/localization.md)
 - Component patterns: [examples/component-patterns.md](examples/component-patterns.md)

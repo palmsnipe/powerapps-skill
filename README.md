@@ -22,6 +22,7 @@ The skill includes:
 
 - `SKILL.md` as the main entry point.
 - Power Fx formula guidance and examples.
+- Practical Power Fx recipe patterns for filters, date ranges, saves, validation, variables, and state.
 - Canvas App design and maintainability guidance.
 - Canvas component, component library, and code component guidance.
 - Delegation guidance for SharePoint, Dataverse, Excel, and common formula patterns.
@@ -35,7 +36,7 @@ The skill includes:
 
 ## Does It Have All Power Fx Information?
 
-No. Power Fx is too large and changes over time. This skill includes practical guidance for common Canvas App formulas such as `With()`, `Patch()`, `SubmitForm()`, `LookUp()`, `Filter()`, `SortByColumns()`, `Search()`, `ForAll()`, `Concurrent()`, `Coalesce()`, `IfError()`, `IsBlank()`, `IsEmpty()`, record scope, `ThisRecord`, and `As`.
+No. Power Fx is too large and changes over time. This skill includes practical guidance for common Canvas App formulas such as `With()`, `Patch()`, `SubmitForm()`, `LookUp()`, `Filter()`, `SortByColumns()`, `Search()`, `ForAll()`, `Concurrent()`, `Coalesce()`, `IfError()`, `IsBlank()`, `IsEmpty()`, record scope, `ThisRecord`, and `As`, plus reusable recipe patterns for common app work.
 
 For exhaustive function behavior, syntax, and host-specific differences, refresh against the official Microsoft Learn Power Fx reference.
 
