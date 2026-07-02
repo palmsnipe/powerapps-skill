@@ -10,6 +10,8 @@ The non-delegable row limit is an app setting. The common default is 500 records
 
 Do not describe non-delegable behavior as "loading all rows client-side" or "downloading all 30K rows." For a delegable data source with a non-delegable formula, Power Apps applies the non-delegable part only to the first configured row-limit records. That is why results can be incomplete.
 
+Do not say "there is no partial delegation" or "the entire query falls back" as a universal rule. The practical warning is that if part of the formula cannot be delegated, Power Apps can return incomplete results because the non-delegable work is limited to the first configured row-limit records. Keep the explanation focused on correctness risk rather than oversimplifying the query planner.
+
 Bad row-limit advice:
 
 ```text
@@ -55,6 +57,12 @@ Do not say:
 StartsWith(Title, searchText) delegates only if Title is indexed.
 ```
 
+Do not say:
+
+```text
+SortByColumns delegates only if DueDate is indexed.
+```
+
 Say:
 
 ```text
@@ -65,6 +73,12 @@ For `StartsWith()` on SharePoint text columns, say:
 
 ```text
 StartsWith(Title, searchText) is a SharePoint-friendly prefix-search pattern for text columns. Verify delegation in Power Apps Studio, and separately index Title if needed for large-list performance.
+```
+
+For sorting, say:
+
+```text
+SortByColumns by DueDate is a delegation-friendly sort shape for a date column, but verify in Studio for the exact connector and formula. Separately index DueDate if needed for SharePoint large-list performance.
 ```
 
 Delegation support is about whether Power Apps can translate the formula to the connector query. SharePoint indexing is about whether SharePoint can efficiently evaluate large-list queries. They are related in practice, but they are not the same thing.
@@ -112,6 +126,12 @@ For SharePoint complex fields:
 
 - Person columns: only some subfields, such as `Email` and `DisplayName`, are documented as delegable. Prefer `Email` for identity stability, but still verify. Do not call `DisplayName` absolutely non-delegable without checking current docs and the exact connector behavior.
 - Choice and lookup columns: delegation depends on the subfield and operation. Do not assume `StartsWith()` on choice or lookup subfields is delegable.
+
+Local values:
+
+- `User().Email`, `User().FullName`, `Today()`, and `Year(Today())` are evaluated locally.
+- Do not call those local values "non-delegable" by themselves.
+- Prefer comparing data-source columns to local scalar values over wrapping data-source columns in functions. For example, `DueDate >= startDate` is safer than `Year(DueDate) = Year(Today())`.
 
 ## Dataverse Advantages
 
@@ -187,6 +207,8 @@ SortByColumns(Requests, "Created", SortOrder.Descending)
 ```
 
 Avoid sorting by computed expressions when data volume matters.
+
+Do not tie sort delegation to indexing. Sorting by a supported column can be a delegation-friendly formula shape; indexing the sort column is a separate SharePoint scale/performance recommendation.
 
 ## `Search()`, `StartsWith()`, and `In`
 

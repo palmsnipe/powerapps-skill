@@ -33,6 +33,9 @@ Use this checklist to review a Power Fx formula. Prioritize correctness, delegat
 - The review does not claim indexing makes a non-delegable formula delegable.
 - The review does not say `StartsWith()` delegates only if the column is indexed.
 - The review separates `StartsWith()` delegation verification from SharePoint indexing recommendations.
+- The review does not say sorting delegates only if the sort column is indexed.
+- The review does not say "no partial delegation" or "the entire query falls back" as a universal rule.
+- The review does not call local values such as `User().Email`, `User().FullName`, `Today()`, or `Year(Today())` non-delegable by themselves.
 - The review does not say non-delegable formulas load all rows client-side; it says only the first configured row-limit records are processed locally.
 - The review does not recommend setting the data row limit above 2,000 or matching it to the data source size.
 - The review avoids "Delegation-Safe" headings unless delegation is certain.

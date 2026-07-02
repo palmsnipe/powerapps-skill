@@ -176,6 +176,8 @@ SortByColumns(
 
 Sorting is connector-specific. Sorting by simple columns is often safer than sorting by computed expressions.
 
+Do not say sorting delegates only if a column is indexed. Delegation depends on connector support, formula shape, and column type. Indexing is a separate SharePoint large-list performance concern.
+
 ## `Search()`
 
 `Search()` is convenient but not universally delegable. It is often risky with SharePoint and Excel.
