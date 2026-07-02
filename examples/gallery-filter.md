@@ -67,7 +67,7 @@ With(
 
 This keeps the formula readable and avoids repeating control references.
 
-## SharePoint-Safe Version
+## SharePoint-Friendly Version to Verify
 
 Assume:
 

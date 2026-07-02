@@ -21,6 +21,10 @@ Do not rely on MCP, live Power Platform access, organization credentials, tenant
 - Do not assume a formula is delegable unless known.
 - Do not say a SharePoint formula "will delegate" just because columns are indexed. Indexing helps SharePoint scale and avoid list-threshold/performance problems; it does not make a non-delegable Power Fx pattern delegable.
 - When discussing SharePoint delegation, use cautious language such as "SharePoint-friendly formula shape" or "likely delegable, verify in Power Apps Studio" unless the exact connector, column types, and formula are known from official documentation.
+- Do not say a non-delegable query loads or downloads all rows client-side. Say Power Apps processes only the first configured non-delegable row limit: commonly 500 by default, up to 2,000.
+- Avoid headings such as "Delegation-Safe" unless delegation is certain. Prefer "Safer SharePoint-Friendly Rewrite" or "Delegation-Friendly Rewrite to Verify."
+- Do not call SharePoint indexes "mandatory" unless the user has described a specific threshold/error/policy that makes them mandatory. Prefer "strongly recommended for large-list performance" or "verify/index where appropriate."
+- Do not suggest `IfError()` catches delegation warnings. Delegation warnings are authoring-time warnings; `IfError()` is for runtime errors such as `Patch()`, connector, and flow failures.
 - Ask whether the data source is SharePoint, Dataverse, SQL, Excel, or another connector when it matters.
 - Mention delegation risks when filtering, searching, sorting, aggregating, or using `LookUp`.
 - Prefer responsive layouts using containers.

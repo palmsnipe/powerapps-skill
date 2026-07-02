@@ -9,6 +9,7 @@ Symptoms:
 - Blue underline or delegation warning in Studio.
 - Missing records in galleries.
 - Search works in small data but fails at scale.
+- Known matching records beyond the first 500/2,000 do not appear.
 
 Check:
 
@@ -28,6 +29,10 @@ Safer approach:
 - Prefer Dataverse for relational or large-scale apps.
 
 Do not tell users that indexing fixes delegation. Indexes help SharePoint evaluate large-list queries; they do not make `Lower()`, `Year()`, `in`, or unsupported operations delegable.
+
+Do not say the app downloads all rows and filters locally. For delegable data sources with non-delegable formulas, Power Apps processes only the first configured row-limit records locally, commonly 500 by default and up to 2,000.
+
+Do not suggest `IfError()` as a delegation-warning fix. Use `IfError()` for runtime failures, not authoring-time delegation warnings.
 
 ## Invalid Argument Types
 

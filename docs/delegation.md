@@ -8,6 +8,8 @@ Delegation affects correctness, not just performance. A non-delegable filter can
 
 The non-delegable row limit is an app setting. The common default is 500 records and it can often be raised to 2,000, but raising it does not fix correctness for larger data sets. The right fix is usually to rewrite the formula or change the data source/design so the query can be delegated.
 
+Do not describe non-delegable behavior as "loading all rows client-side" or "downloading all 30K rows." For a delegable data source with a non-delegable formula, Power Apps applies the non-delegable part only to the first configured row-limit records. That is why results can be incomplete.
+
 Always mention delegation when discussing:
 
 - `Filter()`
@@ -23,6 +25,12 @@ Always mention delegation when discussing:
 
 Be careful with certainty. Prefer "likely delegable" or "SharePoint-friendly formula shape; verify in Power Apps Studio" over absolute green-check claims.
 
+Avoid overconfident section headings:
+
+- Avoid: `Delegation-Safe Formula`
+- Prefer: `Safer SharePoint-Friendly Rewrite`
+- Prefer: `Delegation-Friendly Rewrite to Verify`
+
 Do not say:
 
 ```text
@@ -36,6 +44,10 @@ This uses a more delegation-friendly formula shape. Verify that Power Apps Studi
 ```
 
 Delegation support is about whether Power Apps can translate the formula to the connector query. SharePoint indexing is about whether SharePoint can efficiently evaluate large-list queries. They are related in practice, but they are not the same thing.
+
+Do not call indexes "mandatory" unless the user gives a specific SharePoint threshold failure, tenant policy, or operational requirement. For general guidance, say indexes are strongly recommended for large lists and should be verified.
+
+Do not recommend `IfError()` as a fix for delegation warnings. Delegation warnings are authoring-time signals; they normally do not throw runtime errors. Use `IfError()` for runtime operations such as `Patch()`, connector calls, and flow calls.
 
 ## SharePoint Common Limitations
 
@@ -198,4 +210,10 @@ Good uncertainty wording:
 
 ```text
 This is a safer SharePoint-friendly rewrite, but I would not call it guaranteed delegable until Studio shows no delegation warning for the exact formula and list schema.
+```
+
+Good testing wording:
+
+```text
+Do not rely only on Gallery.AllItems or a visible count. Test with known records beyond the first 500/2,000 that should match each filter, and confirm they appear when the filter is applied.
 ```

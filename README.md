@@ -94,7 +94,7 @@ Use this process periodically because Power Platform changes often:
 High-value future improvements:
 
 - Add connector-specific delegation tables for SharePoint, Dataverse, SQL, and Excel, with explicit uncertainty notes.
-- Add a delegation wording test set that rejects answers claiming SharePoint indexing guarantees delegation.
+- Add a delegation wording test set that rejects answers claiming SharePoint indexing guarantees delegation, non-delegable formulas download all rows, or `IfError()` catches delegation warnings.
 - Add deeper Dataverse security examples for business units, teams, ownership, and field security.
 - Add more Power Automate patterns for approvals, retries, scopes, and child flows.
 - Add a PCF/code component checklist for professional developer projects.
