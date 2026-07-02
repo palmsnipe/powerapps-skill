@@ -2,6 +2,21 @@
 
 Delegation means Power Apps sends a query to the data source so the server filters, sorts, searches, or looks up records before data reaches the app. Without delegation, Power Apps may only process the first configured page of records locally, which can produce incomplete results.
 
+## Contents
+
+- [Why Delegation Matters](#why-delegation-matters)
+- [Delegation Language Discipline](#delegation-language-discipline)
+- [SharePoint Common Limitations](#sharepoint-common-limitations)
+- [Dataverse Advantages](#dataverse-advantages)
+- [Excel Limitations](#excel-limitations)
+- [Common Delegation Risks](#common-delegation-risks)
+- [`Filter()`](#filter)
+- [`LookUp()`](#lookup)
+- [`Sort()` and `SortByColumns()`](#sort-and-sortbycolumns)
+- [`Search()`, `StartsWith()`, and `In`](#search-startswith-and-in)
+- [Rewriting Formulas](#rewriting-formulas)
+- [When Uncertain](#when-uncertain)
+
 ## Why Delegation Matters
 
 Delegation affects correctness, not just performance. A non-delegable filter can silently miss records beyond the local row limit.
@@ -38,6 +53,8 @@ Always mention delegation when discussing:
 ## Delegation Language Discipline
 
 Be careful with certainty. Prefer "likely delegable" or "SharePoint-friendly formula shape; verify in Power Apps Studio" over absolute green-check claims.
+
+The examples in this section are reusable wording patterns. Do not treat them as only applying to one formula, list, or prompt. Apply the same principles to any connector: separate formula support from performance settings, identify uncertainty, and avoid turning heuristics into guarantees.
 
 Avoid overconfident section headings:
 

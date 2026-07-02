@@ -19,24 +19,11 @@ Do not rely on MCP, live Power Platform access, organization credentials, tenant
 - Do not invent Power Fx functions.
 - Do not invent connector capabilities.
 - Do not assume a formula is delegable unless known.
-- Do not say a SharePoint formula "will delegate" just because columns are indexed. Indexing helps SharePoint scale and avoid list-threshold/performance problems; it does not make a non-delegable Power Fx pattern delegable.
-- Do not say `StartsWith()` or another SharePoint operation "delegates only if the column is indexed." Say delegation depends on connector support, column type, and formula shape; indexing is a separate large-list performance/list-threshold concern.
-- When discussing SharePoint delegation, use cautious language such as "SharePoint-friendly formula shape" or "likely delegable, verify in Power Apps Studio" unless the exact connector, column types, and formula are known from official documentation.
-- Do not say a non-delegable query loads or downloads all rows client-side. Say Power Apps processes only the first configured non-delegable row limit: commonly 500 by default, up to 2,000.
-- Do not say "there is no partial delegation" or "the entire query falls back" as a universal rule. Say any non-delegable part can cause incomplete results because the non-delegable work is limited to the first configured row-limit records.
-- Do not tell users to set the non-delegable data row limit above 2,000 or to match their data size, such as 30,000. The app setting is commonly 500 by default and maxes at 2,000; large data sets must rely on delegation, not a larger row-limit setting.
-- Avoid headings such as "Delegation-Safe" unless delegation is certain. Prefer "Safer SharePoint-Friendly Rewrite" or "Delegation-Friendly Rewrite to Verify."
-- Do not call SharePoint indexes "mandatory" unless the user has described a specific threshold/error/policy that makes them mandatory. Prefer "strongly recommended for large-list performance" or "verify/index where appropriate."
-- Do not suggest `IfError()` catches delegation warnings. Delegation warnings are authoring-time warnings; `IfError()` is for runtime errors such as `Patch()`, connector, and flow failures.
-- For optional search boxes, normalize once with `Trim()` and preserve the blank-search guard: `IsBlank(searchText) || StartsWith(Title, searchText)`. Do not drop the guard when rewriting formulas.
-- In full formula rewrites with search input, include `searchText: Trim(txtSearch.Text)` in `With()` and use `searchText` consistently. Do not leave repeated raw `txtSearch.Text` references in the predicate.
-- Do not recommend SharePoint calculated columns such as `TitleLower = LOWER([Title])` as delegation workarounds. Calculated columns and operations on calculated values are common delegation risks. Prefer a real text column maintained by app logic, Power Automate, migration/process logic, or use Dataverse/search services when requirements need case-insensitive contains search at scale.
-- Do not say "no delegable SharePoint solution exists" as an absolute for contains/full-text search. Say standard SharePoint list filtering generally does not provide delegable contains search, then suggest Dataverse, Microsoft Search/custom API, or another search service for that requirement.
-- Do not state that SharePoint person `DisplayName` is absolutely non-delegable unless verified. Treat it as fragile for identity matching and prefer `Email` for stability, while still telling the user to verify delegation for the exact person subfield and connector.
-- Do not call local values or functions such as `User().FullName`, `User().Email`, `Today()`, or `Year(Today())` "non-delegable" by themselves. Delegation risk comes from how local values are used with data-source columns, especially when functions wrap data-source columns.
-- Do not say sorting delegates only if the column is indexed. Sort delegation depends on connector support, formula shape, and column type; indexing sort columns is a separate large-list performance/list-threshold recommendation.
 - Ask whether the data source is SharePoint, Dataverse, SQL, Excel, or another connector when it matters.
 - Mention delegation risks when filtering, searching, sorting, aggregating, or using `LookUp`.
+- For delegation questions, separate connector/formula support from performance concerns such as SharePoint indexing, row limits, and list thresholds. Use [docs/delegation.md](docs/delegation.md) for detailed wording and anti-patterns.
+- Distinguish local scalar values from functions applied to data-source columns. Delegation risk usually comes from the operation over the data-source column, not from local values by themselves.
+- For optional search boxes, normalize input once with `Trim()` and preserve an explicit blank-search guard.
 - Prefer responsive layouts using containers.
 - Prefer maintainable formulas using `With()`, named formulas, components, variables only when useful, and clear control naming.
 - Prefer solutions, environment variables, connection references, and pipelines for ALM.
@@ -89,6 +76,7 @@ Use examples when the user needs a concrete pattern:
 - Localization: [examples/localization.md](examples/localization.md)
 - Component patterns: [examples/component-patterns.md](examples/component-patterns.md)
 - Power Automate patterns: [examples/power-automate-patterns.md](examples/power-automate-patterns.md)
+- Skill validation prompts: [examples/validation-prompts.md](examples/validation-prompts.md)
 
 Use templates when asked to review an app, formula, or architecture:
 
