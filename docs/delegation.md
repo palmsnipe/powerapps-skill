@@ -49,6 +49,8 @@ Do not call indexes "mandatory" unless the user gives a specific SharePoint thre
 
 Do not recommend `IfError()` as a fix for delegation warnings. Delegation warnings are authoring-time signals; they normally do not throw runtime errors. Use `IfError()` for runtime operations such as `Patch()`, connector calls, and flow calls.
 
+Do not recommend SharePoint calculated columns as a delegation workaround for search. For example, avoid suggesting `TitleLower = LOWER([Title])` in SharePoint and then filtering on it as if that solves delegation. If a normalized search value is needed, prefer a real text column populated by app logic, Power Automate, import/migration logic, or another controlled process, and still verify delegation. For true contains or full-text search at scale, consider Dataverse search, Microsoft Search/custom API, or another search-oriented service.
+
 ## SharePoint Common Limitations
 
 SharePoint is common but has important limits:
@@ -82,7 +84,7 @@ If uncertain, warn that delegation must be verified.
 
 For SharePoint complex fields:
 
-- Person columns: only some subfields, such as `Email` and `DisplayName`, are documented as delegable. Prefer `Email` for stability, but still verify.
+- Person columns: only some subfields, such as `Email` and `DisplayName`, are documented as delegable. Prefer `Email` for identity stability, but still verify. Do not call `DisplayName` absolutely non-delegable without checking current docs and the exact connector behavior.
 - Choice and lookup columns: delegation depends on the subfield and operation. Do not assume `StartsWith()` on choice or lookup subfields is delegable.
 
 ## Dataverse Advantages
@@ -177,6 +179,23 @@ With(
 ```
 
 When rewriting optional search, preserve the blank-search guard. A bare `StartsWith(Title, txtSearch.Text)` may be valid, but `IsBlank(searchText) || StartsWith(Title, searchText)` is clearer and more robust for user-controlled search inputs.
+
+In full rewrites, bind the normalized search text in the same `With()` block as other constants:
+
+```powerfx
+With(
+    {
+        searchText: Trim(txtSearch.Text),
+        startDate: Date(Year(Today()), 1, 1),
+        endDate: Date(Year(Today()) + 1, 1, 1),
+        userEmail: User().Email
+    },
+    Filter(
+        Requests,
+        IsBlank(searchText) || StartsWith(Title, searchText)
+    )
+)
+```
 
 Risky:
 

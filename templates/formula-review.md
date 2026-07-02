@@ -34,6 +34,8 @@ Use this checklist to review a Power Fx formula. Prioritize correctness, delegat
 - The review does not say non-delegable formulas load all rows client-side; it says only the first configured row-limit records are processed locally.
 - The review avoids "Delegation-Safe" headings unless delegation is certain.
 - The review does not suggest `IfError()` catches delegation warnings.
+- The review does not suggest SharePoint calculated columns as delegation/search workarounds.
+- Person `DisplayName` is treated as fragile for identity matching, not automatically declared non-delegable unless verified.
 - Uncertain delegation is called out explicitly.
 
 ## Readability
@@ -41,6 +43,7 @@ Use this checklist to review a Power Fx formula. Prioritize correctness, delegat
 - Formula is short enough to understand.
 - Repeated expressions are named with `With()`.
 - Optional search inputs are normalized once with `Trim()` and preserve an explicit blank-search guard.
+- Full rewrites include the normalized `searchText` variable in `With()` and use it consistently.
 - Record scope is clear with `As` where useful.
 - Control names are meaningful.
 - Nested `If()` or repeated logic is simplified where possible.

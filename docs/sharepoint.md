@@ -91,6 +91,7 @@ SharePoint delegation needs care:
 - Avoid wrapping data source columns in functions inside predicates.
 - For person columns, prefer `Email` over `DisplayName` for identity stability, but still verify delegation.
 - For choice and lookup columns, check the subfield and operation. Do not assume every operation on `.Value` is delegable.
+- Do not suggest calculated columns such as `TitleLower = LOWER([Title])` as a reliable delegation workaround for case-insensitive search. Use a real maintained text column or a more appropriate data/search service.
 
 Risky:
 
@@ -143,6 +144,7 @@ For large lists:
 - Filter before sorting.
 - Avoid collecting the entire list.
 - Consider Dataverse if relationships, security, or scale are important.
+- If users need case-insensitive contains search, do not rely on SharePoint calculated columns. Consider Dataverse search, Microsoft Search/custom API, or a real normalized text column populated by app/flow/process logic and then verify delegation.
 
 Important distinction:
 

@@ -26,6 +26,9 @@ Do not rely on MCP, live Power Platform access, organization credentials, tenant
 - Do not call SharePoint indexes "mandatory" unless the user has described a specific threshold/error/policy that makes them mandatory. Prefer "strongly recommended for large-list performance" or "verify/index where appropriate."
 - Do not suggest `IfError()` catches delegation warnings. Delegation warnings are authoring-time warnings; `IfError()` is for runtime errors such as `Patch()`, connector, and flow failures.
 - For optional search boxes, normalize once with `Trim()` and preserve the blank-search guard: `IsBlank(searchText) || StartsWith(Title, searchText)`. Do not drop the guard when rewriting formulas.
+- In full formula rewrites with search input, include `searchText: Trim(txtSearch.Text)` in `With()` and use `searchText` consistently. Do not leave repeated raw `txtSearch.Text` references in the predicate.
+- Do not recommend SharePoint calculated columns such as `TitleLower = LOWER([Title])` as delegation workarounds. Calculated columns and operations on calculated values are common delegation risks. Prefer a real text column maintained by app logic, Power Automate, migration/process logic, or use Dataverse/search services when requirements need case-insensitive contains search at scale.
+- Do not state that SharePoint person `DisplayName` is absolutely non-delegable unless verified. Treat it as fragile for identity matching and prefer `Email` for stability, while still telling the user to verify delegation for the exact person subfield and connector.
 - Ask whether the data source is SharePoint, Dataverse, SQL, Excel, or another connector when it matters.
 - Mention delegation risks when filtering, searching, sorting, aggregating, or using `LookUp`.
 - Prefer responsive layouts using containers.
