@@ -16,7 +16,7 @@ Check:
 - Connector type.
 - Column type.
 - Formula operators.
-- Data row limit setting.
+- Data row limit setting. It is commonly 500 by default and maxes at 2,000; do not set it to the full data size.
 - Whether filter columns are indexed.
 - Whether the answer is mixing up delegation support with SharePoint indexing.
 
@@ -31,6 +31,8 @@ Safer approach:
 Do not tell users that indexing fixes delegation. Indexes help SharePoint evaluate large-list queries; they do not make `Lower()`, `Year()`, `in`, or unsupported operations delegable.
 
 Do not say the app downloads all rows and filters locally. For delegable data sources with non-delegable formulas, Power Apps processes only the first configured row-limit records locally, commonly 500 by default and up to 2,000.
+
+Do not recommend increasing the data row limit to values such as 30,000. If a list has 30,000 rows, fix delegation or redesign the data/query pattern.
 
 Do not suggest `IfError()` as a delegation-warning fix. Use `IfError()` for runtime failures, not authoring-time delegation warnings.
 

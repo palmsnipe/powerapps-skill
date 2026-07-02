@@ -32,6 +32,7 @@ Use this checklist to review a Power Fx formula. Prioritize correctness, delegat
 - SharePoint filter/sort columns are indexed where appropriate for large-list performance.
 - The review does not claim indexing makes a non-delegable formula delegable.
 - The review does not say non-delegable formulas load all rows client-side; it says only the first configured row-limit records are processed locally.
+- The review does not recommend setting the data row limit above 2,000 or matching it to the data source size.
 - The review avoids "Delegation-Safe" headings unless delegation is certain.
 - The review does not suggest `IfError()` catches delegation warnings.
 - The review does not suggest SharePoint calculated columns as delegation/search workarounds.
@@ -68,5 +69,6 @@ Use this checklist to review a Power Fx formula. Prioritize correctness, delegat
 3. Provide a revised formula.
 4. Explain important changes.
 5. Clearly separate delegation support from SharePoint indexing/list-threshold considerations.
-6. Explain how to test with known matching records beyond the 500/2,000 row limit, not only visible gallery counts.
-7. Ask for missing connector or schema details if needed.
+6. State that the data row limit is not a scalability solution; for large data sources the formula must delegate.
+7. Explain how to test with known matching records beyond the 500/2,000 row limit, not only visible gallery counts.
+8. Ask for missing connector or schema details if needed.

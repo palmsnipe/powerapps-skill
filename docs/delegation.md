@@ -6,9 +6,21 @@ Delegation means Power Apps sends a query to the data source so the server filte
 
 Delegation affects correctness, not just performance. A non-delegable filter can silently miss records beyond the local row limit.
 
-The non-delegable row limit is an app setting. The common default is 500 records and it can often be raised to 2,000, but raising it does not fix correctness for larger data sets. The right fix is usually to rewrite the formula or change the data source/design so the query can be delegated.
+The non-delegable row limit is an app setting. The common default is 500 records and it can often be raised to 2,000, but raising it does not fix correctness for larger data sets. Do not recommend setting this value above 2,000 or matching it to a list size such as 30,000. The right fix is usually to rewrite the formula or change the data source/design so the query can be delegated.
 
 Do not describe non-delegable behavior as "loading all rows client-side" or "downloading all 30K rows." For a delegable data source with a non-delegable formula, Power Apps applies the non-delegable part only to the first configured row-limit records. That is why results can be incomplete.
+
+Bad row-limit advice:
+
+```text
+Set the data row limit to 30,000.
+```
+
+Better:
+
+```text
+The non-delegable row limit is commonly 500 by default and maxes at 2,000. For 30,000 rows, the formula must delegate; raising the row limit cannot make a non-delegable query correct at that scale.
+```
 
 Always mention delegation when discussing:
 
