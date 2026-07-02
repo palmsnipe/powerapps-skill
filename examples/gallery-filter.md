@@ -141,5 +141,6 @@ When giving gallery filter advice, mention:
 - `in`, `Search()`, and functions around columns are risky for large data.
 - SharePoint lists need delegation-friendly formulas and indexed filter/sort columns for large-list scale.
 - Do not claim "will delegate if indexed"; say "verify in Power Apps Studio."
+- Do not claim "`StartsWith` delegates only if the column is indexed"; say indexing is separate from delegation and helps with large-list performance.
 - Do not suggest SharePoint calculated columns such as `TitleLower = LOWER([Title])` as delegation workarounds. If normalized search is needed, use a real maintained text column or a search-capable data service and still verify delegation.
 - Excel is not a good backend for large searchable data.

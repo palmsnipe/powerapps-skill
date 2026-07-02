@@ -49,10 +49,22 @@ Do not say:
 This will delegate if the columns are indexed.
 ```
 
+Do not say:
+
+```text
+StartsWith(Title, searchText) delegates only if Title is indexed.
+```
+
 Say:
 
 ```text
 This uses a more delegation-friendly formula shape. Verify that Power Apps Studio shows no delegation warning for this exact connector, column types, and formula. Indexing the SharePoint columns is still important for large-list performance and list-threshold behavior, but indexing does not make a non-delegable Power Fx pattern delegable.
+```
+
+For `StartsWith()` on SharePoint text columns, say:
+
+```text
+StartsWith(Title, searchText) is a SharePoint-friendly prefix-search pattern for text columns. Verify delegation in Power Apps Studio, and separately index Title if needed for large-list performance.
 ```
 
 Delegation support is about whether Power Apps can translate the formula to the connector query. SharePoint indexing is about whether SharePoint can efficiently evaluate large-list queries. They are related in practice, but they are not the same thing.
@@ -62,6 +74,8 @@ Do not call indexes "mandatory" unless the user gives a specific SharePoint thre
 Do not recommend `IfError()` as a fix for delegation warnings. Delegation warnings are authoring-time signals; they normally do not throw runtime errors. Use `IfError()` for runtime operations such as `Patch()`, connector calls, and flow calls.
 
 Do not recommend SharePoint calculated columns as a delegation workaround for search. For example, avoid suggesting `TitleLower = LOWER([Title])` in SharePoint and then filtering on it as if that solves delegation. If a normalized search value is needed, prefer a real text column populated by app logic, Power Automate, import/migration logic, or another controlled process, and still verify delegation. For true contains or full-text search at scale, consider Dataverse search, Microsoft Search/custom API, or another search-oriented service.
+
+Avoid absolute wording such as "no delegable SharePoint solution exists" for contains search. Safer wording: standard SharePoint list filtering generally does not provide delegable contains search; for that requirement, use a search-oriented service or different data platform and verify current connector behavior.
 
 ## SharePoint Common Limitations
 

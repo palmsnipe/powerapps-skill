@@ -86,6 +86,7 @@ SharePoint delegation needs care:
 - Prefer simple equality filters and source-supported operations.
 - Index filter and sort columns for large lists, but do not treat indexing as proof of delegation.
 - Use `StartsWith()` where supported for prefix matching.
+- Do not say `StartsWith()` delegates only if the column is indexed. Verify `StartsWith()` delegation based on connector support, column type, and formula shape; use indexes separately for large-list performance.
 - Avoid `in` for large lists.
 - Avoid calculated columns in filters for large lists.
 - Avoid wrapping data source columns in functions inside predicates.
@@ -111,7 +112,7 @@ With(
 )
 ```
 
-This is safer because `Title` is normally a text column. It is not a guarantee for every SharePoint schema. Verify in Power Apps Studio and current Microsoft Learn documentation.
+This is safer because `Title` is normally a text column. It is not a guarantee for every SharePoint schema. Verify in Power Apps Studio and current Microsoft Learn documentation. Index `Title` separately if needed for large-list performance; indexing is not what makes `StartsWith()` delegable.
 
 ## Attachments
 
@@ -144,7 +145,7 @@ For large lists:
 - Filter before sorting.
 - Avoid collecting the entire list.
 - Consider Dataverse if relationships, security, or scale are important.
-- If users need case-insensitive contains search, do not rely on SharePoint calculated columns. Consider Dataverse search, Microsoft Search/custom API, or a real normalized text column populated by app/flow/process logic and then verify delegation.
+- If users need case-insensitive contains search, do not rely on SharePoint calculated columns. Standard SharePoint list filtering generally does not provide delegable contains search. Consider Dataverse search, Microsoft Search/custom API, or a real normalized text column populated by app/flow/process logic and then verify delegation.
 
 Important distinction:
 

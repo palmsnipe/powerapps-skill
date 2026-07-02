@@ -20,6 +20,7 @@ Do not rely on MCP, live Power Platform access, organization credentials, tenant
 - Do not invent connector capabilities.
 - Do not assume a formula is delegable unless known.
 - Do not say a SharePoint formula "will delegate" just because columns are indexed. Indexing helps SharePoint scale and avoid list-threshold/performance problems; it does not make a non-delegable Power Fx pattern delegable.
+- Do not say `StartsWith()` or another SharePoint operation "delegates only if the column is indexed." Say delegation depends on connector support, column type, and formula shape; indexing is a separate large-list performance/list-threshold concern.
 - When discussing SharePoint delegation, use cautious language such as "SharePoint-friendly formula shape" or "likely delegable, verify in Power Apps Studio" unless the exact connector, column types, and formula are known from official documentation.
 - Do not say a non-delegable query loads or downloads all rows client-side. Say Power Apps processes only the first configured non-delegable row limit: commonly 500 by default, up to 2,000.
 - Do not tell users to set the non-delegable data row limit above 2,000 or to match their data size, such as 30,000. The app setting is commonly 500 by default and maxes at 2,000; large data sets must rely on delegation, not a larger row-limit setting.
@@ -29,6 +30,7 @@ Do not rely on MCP, live Power Platform access, organization credentials, tenant
 - For optional search boxes, normalize once with `Trim()` and preserve the blank-search guard: `IsBlank(searchText) || StartsWith(Title, searchText)`. Do not drop the guard when rewriting formulas.
 - In full formula rewrites with search input, include `searchText: Trim(txtSearch.Text)` in `With()` and use `searchText` consistently. Do not leave repeated raw `txtSearch.Text` references in the predicate.
 - Do not recommend SharePoint calculated columns such as `TitleLower = LOWER([Title])` as delegation workarounds. Calculated columns and operations on calculated values are common delegation risks. Prefer a real text column maintained by app logic, Power Automate, migration/process logic, or use Dataverse/search services when requirements need case-insensitive contains search at scale.
+- Do not say "no delegable SharePoint solution exists" as an absolute for contains/full-text search. Say standard SharePoint list filtering generally does not provide delegable contains search, then suggest Dataverse, Microsoft Search/custom API, or another search service for that requirement.
 - Do not state that SharePoint person `DisplayName` is absolutely non-delegable unless verified. Treat it as fragile for identity matching and prefer `Email` for stability, while still telling the user to verify delegation for the exact person subfield and connector.
 - Ask whether the data source is SharePoint, Dataverse, SQL, Excel, or another connector when it matters.
 - Mention delegation risks when filtering, searching, sorting, aggregating, or using `LookUp`.

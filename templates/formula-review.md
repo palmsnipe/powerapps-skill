@@ -31,6 +31,8 @@ Use this checklist to review a Power Fx formula. Prioritize correctness, delegat
 - SharePoint filters use a delegation-friendly formula shape where possible.
 - SharePoint filter/sort columns are indexed where appropriate for large-list performance.
 - The review does not claim indexing makes a non-delegable formula delegable.
+- The review does not say `StartsWith()` delegates only if the column is indexed.
+- The review separates `StartsWith()` delegation verification from SharePoint indexing recommendations.
 - The review does not say non-delegable formulas load all rows client-side; it says only the first configured row-limit records are processed locally.
 - The review does not recommend setting the data row limit above 2,000 or matching it to the data source size.
 - The review avoids "Delegation-Safe" headings unless delegation is certain.
